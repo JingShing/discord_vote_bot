@@ -42,8 +42,15 @@ async def on_reaction_add(reaction, user):
     message = reaction.message
     if user.name == bot.user.name:
         return
-
-    embed = message.embeds[0]
+    try:
+        if len(message.embeds)>0:
+            embed = message.embeds[0]
+        else:
+            print("add reaction: on other message")
+            return
+    except Exception as e:
+        print("add reaction:"+e)
+        return
 
     if not message.id in POLL_DICT.keys():
         await user.send("投票已經結算")
